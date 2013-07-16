@@ -1,0 +1,21 @@
+{
+    "name": "softlabs/validator",
+    "description": "An extension of laravel's validator class ( based off jeffrey way's way of validation )",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "tstuttard",
+            "email": "thomas.stuttard@softlabs.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "Softlabs\\SentryLogin": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,6 +1,6 @@
 <?php namespace Softlabs\SentryLogin;
 
-abstract class SentryLogin
+class SentryLogin
 {
 
     /**

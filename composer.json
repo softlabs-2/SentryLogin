@@ -1,6 +1,6 @@
 {
-    "name": "softlabs/validator",
-    "description": "An extension of laravel's validator class ( based off jeffrey way's way of validation )",
+    "name": "softlabs/sentrylogin",
+    "description": "Login functions with password reseting using Sentry",
     "license": "BSD-2-Clause",
     "authors": [
         {

@@ -115,7 +115,7 @@ class SentryLogin
                     // Failed authentication
                 endif;
 
-            } catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
+            } catch (\Cartalyst\Sentry\Users\LoginRequiredException $e) {
                 return \Response::json(
                     array(
                         'status' => 'ok',
@@ -125,7 +125,7 @@ class SentryLogin
                         )
                     )
                 );
-            } catch (Cartalyst\Sentry\Users\PasswordRequiredException $e) {
+            } catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e) {
                 return \Response::json(
                     array(
                         'status' => 'ok',
@@ -135,7 +135,7 @@ class SentryLogin
                         )
                     )
                 );
-            } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
+            } catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e) {
                 return \Response::json(
                     array(
                         'status' => 'ok',
@@ -146,12 +146,22 @@ class SentryLogin
                         )
                     )
                 );
-            } catch (Cartalyst\Sentry\Throttling\UserBannedException $e) {
+            } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
                 return \Response::json(
                     array(
                         'status' => 'ok',
                         'messages' => array(
                             'error' => 'User is banned',
+                        )
+                    )
+                );
+            } catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
+            {
+                return \Response::json(
+                    array(
+                        'status' => 'ok',
+                        'messages' => array(
+                            'error' => 'Error! Email or Password is Invalid',
                         )
                     )
                 );
@@ -248,7 +258,7 @@ class SentryLogin
                 );
 
             }
-            catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+            catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
             {
                 return \Response::json(
                     array(
@@ -300,7 +310,7 @@ class SentryLogin
             \Session::flash('tag', 'alert-error');
             return Redirect::to('login');
         }
-        catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+        catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
         {
             \Session::flash('msg', 'Email is invalid.');
             \Session::flash('tag', 'alert-error');
@@ -382,7 +392,7 @@ class SentryLogin
                     )
                 );
             }
-            catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+            catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
             {
                 return \Response::json(
                     array(

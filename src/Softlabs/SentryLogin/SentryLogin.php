@@ -75,7 +75,7 @@ class SentryLogin
                         // check if user belongs to current group
                         if ($user->inGroup($group)) :
 
-                            $prevUrl = \Session::get('prev_url');
+                            $prevUrl = \Session::get('prev_url') ?: '';
                             \Session::forget('prev_url');
 
                             // Log the user in

@@ -30,7 +30,7 @@ class SentryLogin
         $this->input = $input ?: \Input::all();
     }
 
-    public function authenticate()
+    public function authenticate($sessionCallback)
     {
         $rules = array(
             'email' => 'required',
@@ -85,11 +85,7 @@ class SentryLogin
                             \Sentry::login($user);
 
                             // set the session data
-                            \Session::put('id', $user->id);
-                            \Session::put('firstname', $user->firstname);
-                            \Session::put('surname', $user->surname);
-                            \Session::put('email', $user->email);
-                            \Session::put('company_id', $user->company_id);
+                            $sessionCallback($user);
 
                             return \Response::json(
                                 array(

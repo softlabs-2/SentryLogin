@@ -228,7 +228,7 @@ class SentryLogin
                         endif;
 
 
-                        \Email::sendResetPasswordLink($user->id, $resetCode, $module);
+                        \Email::sendResetPasswordLink($user, $resetCode, $module);
 
                         \Session::flash('msg', 'Password reset email sent.');
                         \Session::flash('tag', 'alert-success');

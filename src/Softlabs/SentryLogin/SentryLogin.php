@@ -288,7 +288,7 @@ class SentryLogin
                     // Check if the provided password reset code is valid
                     if ($user->checkResetPasswordCode($this->input['code'])) {
                         // The provided password reset code is Valid
-                        return View::make(
+                        return \View::make(
                             'login.reset-password',
                             array(
                                 'code' => $this->input['code'],
@@ -299,7 +299,7 @@ class SentryLogin
                         // The provided password reset code is Invalid
                         \Session::flash('msg', 'Password reset code is invalid');
                         \Session::flash('tag', 'alert-error');
-                        return Redirect::to('login');
+                        return \Redirect::to('login');
                     }
                 }
             endforeach;
@@ -307,13 +307,13 @@ class SentryLogin
             // The provided password reset code is Invalid
             \Session::flash('msg', 'Password reset code is invalid');
             \Session::flash('tag', 'alert-error');
-            return Redirect::to('login');
+            return \Redirect::to('login');
         }
         catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
         {
             \Session::flash('msg', 'Email is invalid.');
             \Session::flash('tag', 'alert-error');
-            return Redirect::to('login');
+            return \Redirect::to('login');
         }
     }
 

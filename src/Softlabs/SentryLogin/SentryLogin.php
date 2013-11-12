@@ -240,7 +240,7 @@ class SentryLogin
 
                         \Email::sendResetPasswordLink($user, $resetCode, $module);
 
-                        \Session::flash('msg', 'Password Reset Email has been sent.');
+                        \Session::flash('msg', "A reset password link has been sent to your email address: <strong>{$this->input['email']}</strong>");
                         \Session::flash('tag', 'alert-success');
 
                         return \Response::json(
@@ -307,7 +307,7 @@ class SentryLogin
                         );
                     } else {
                         // The provided password reset code is Invalid
-                        \Session::flash('msg', 'The Password Reset Email Link has Expired or is Invalid. Please Try Again.');
+                        \Session::flash('msg', "The reset password link has expired or is invalid for <strong>{$this->input['email']}</strong>. Please try again.");
                         \Session::flash('tag', 'alert-error');
                         return \Redirect::to('login');
                     }
@@ -315,7 +315,7 @@ class SentryLogin
             endforeach;
 
             // The provided password reset code is Invalid
-            \Session::flash('msg', 'The Password Reset Email Link has Expired or is Invalid. Please Try Again.');
+            \Session::flash('msg', "The reset password link has expired or is invalid for <strong>{$this->input['email']}</strong>. Please try again.");
             \Session::flash('tag', 'alert-error');
             return \Redirect::to('login');
         }
@@ -369,7 +369,7 @@ class SentryLogin
                         // Check if the provided password reset code is valid
                         if ($user->attemptResetPassword($this->input['code'], $this->input['password'])):
                             // The provided password reset code is Valid
-                            \Session::flash('msg', 'Password Reset. Please login with Your Email Address and New Password');
+                            \Session::flash('msg', "Password Reset. Please login with Your Email Address: <strong>{$this->input['email']}</strong> and New Password");
                             \Session::flash('tag', 'alert-success');
                             return \Response::json(
                                 array(
@@ -379,7 +379,7 @@ class SentryLogin
                             );
                         else:
                             // The provided password reset code is Invalid
-                            \Session::flash('msg', 'The Password Reset Email Link has Expired or is Invalid. Please Try Again.');
+                            \Session::flash('msg', "The reset password link has expired or is invalid for <strong>{$this->input['email']}</strong>. Please try again.");
                             \Session::flash('tag', 'alert-error');
                             return \Response::json(
                                 array(
@@ -392,7 +392,7 @@ class SentryLogin
                 endforeach;
 
                 // The provided password reset code is Invalid
-                \Session::flash('msg', 'The Password Reset Email Link has Expired or is Invalid. Please Try Again.');
+                \Session::flash('msg', "The reset password link has expired or is invalid for <strong>{$this->input['email']}</strong>. Please try again.");
                 \Session::flash('tag', 'alert-error');
                 return \Response::json(
                     array(

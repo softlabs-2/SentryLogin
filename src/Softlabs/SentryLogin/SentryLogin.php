@@ -369,7 +369,7 @@ class SentryLogin
                         // Check if the provided password reset code is valid
                         if ($user->attemptResetPassword($this->input['code'], $this->input['password'])):
                             // The provided password reset code is Valid
-                            \Session::flash('msg', "Password Reset. Please login with Your Email Address: <strong>{$this->input['email']}</strong> and New Password");
+                            \Session::flash('msg', "Password Reset. Please login with Your Email Address: <strong>{$this->input['email']}</strong> and Your New Password.");
                             \Session::flash('tag', 'alert-success');
                             return \Response::json(
                                 array(

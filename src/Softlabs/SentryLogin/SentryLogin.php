@@ -145,12 +145,22 @@ class SentryLogin
                         )
                     )
                 );
-            } catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
+            } catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
                 return \Response::json(
                     array(
                         'status' => 'ok',
                         'messages' => array(
-                            'error' => 'User is banned',
+                            'error' => 'User has been Suspended. Please wait for 15 minutes before attempting to login again.',
+                        )
+                    )
+                );
+            }
+            catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
+                return \Response::json(
+                    array(
+                        'status' => 'ok',
+                        'messages' => array(
+                            'error' => 'User is banned. Please contact the System Admin to resolve this.',
                         )
                     )
                 );
@@ -230,7 +240,7 @@ class SentryLogin
 
                         \Email::sendResetPasswordLink($user, $resetCode, $module);
 
-                        \Session::flash('msg', 'Password reset email sent.');
+                        \Session::flash('msg', 'Password Reset Email has been sent.');
                         \Session::flash('tag', 'alert-success');
 
                         return \Response::json(
@@ -297,7 +307,7 @@ class SentryLogin
                         );
                     } else {
                         // The provided password reset code is Invalid
-                        \Session::flash('msg', 'Password reset code is invalid');
+                        \Session::flash('msg', 'The Password Reset Email Link has Expired or is Invalid. Please Try Again.');
                         \Session::flash('tag', 'alert-error');
                         return \Redirect::to('login');
                     }
@@ -305,13 +315,13 @@ class SentryLogin
             endforeach;
 
             // The provided password reset code is Invalid
-            \Session::flash('msg', 'Password reset code is invalid');
+            \Session::flash('msg', 'The Password Reset Email Link has Expired or is Invalid. Please Try Again.');
             \Session::flash('tag', 'alert-error');
             return \Redirect::to('login');
         }
         catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
         {
-            \Session::flash('msg', 'Email is invalid.');
+            \Session::flash('msg', 'Error! User does not exist.');
             \Session::flash('tag', 'alert-error');
             return \Redirect::to('login');
         }
@@ -335,7 +345,7 @@ class SentryLogin
                 $myArr[$key] = $messages->first($key, ':message');
             endforeach;
 
-            $myArr['error'] = 'Password fields do not match.';
+            $myArr['error'] = 'The Password Input Fields do not match.';
 
             return \Response::json(
                 array(
@@ -359,7 +369,7 @@ class SentryLogin
                         // Check if the provided password reset code is valid
                         if ($user->attemptResetPassword($this->input['code'], $this->input['password'])):
                             // The provided password reset code is Valid
-                            \Session::flash('msg', 'Password Reset.');
+                            \Session::flash('msg', 'Password Reset. Please login with Your Email Address and New Password');
                             \Session::flash('tag', 'alert-success');
                             return \Response::json(
                                 array(
@@ -369,7 +379,7 @@ class SentryLogin
                             );
                         else:
                             // The provided password reset code is Invalid
-                            \Session::flash('msg', 'Invalid Reset Code. Please try again.');
+                            \Session::flash('msg', 'The Password Reset Email Link has Expired or is Invalid. Please Try Again.');
                             \Session::flash('tag', 'alert-error');
                             return \Response::json(
                                 array(
@@ -382,7 +392,7 @@ class SentryLogin
                 endforeach;
 
                 // The provided password reset code is Invalid
-                \Session::flash('msg', 'Invalid Reset Code. Please try again.');
+                \Session::flash('msg', 'The Password Reset Email Link has Expired or is Invalid. Please Try Again.');
                 \Session::flash('tag', 'alert-error');
                 return \Response::json(
                     array(
